@@ -27,7 +27,39 @@ void pushHead(char name[], int age){
     }
 }
 
+void pushTail(char name[], int age){
+    Node* temp = createNewNode(name, age);
+
+    if(!head){
+        head = tail = temp;
+    }else{
+        tail -> next = temp;
+        tail = temp;
+    }
+}
+
+void pushMid(char name[], int age){
+    ;
+}
+
+void printAll(){
+    if(!head){
+        printf("There's no node!\n");
+    }else{
+        Node* temp = head;
+        while(temp != NULL){
+            printf("Name : %s\nAge : %d\n\n", temp ->name, temp -> age);
+            temp = temp -> next;
+        }
+    }
+}
+
 int main(){
+
+    pushHead("Benny", 19);
+    pushTail("Adidas", 20);
+    pushHead("ynneB", 90);
+    printAll();
 
     
 
