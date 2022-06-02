@@ -39,7 +39,31 @@ void pushTail(char name[], int age){
 }
 
 void pushMid(char name[], int age){
-    ;
+    Node* temp = createNewNode(name, age);
+    if(!head){
+
+        head = tail = temp;
+    }else if(age < head -> age){
+        pushHead(name, age);
+    }else if(age > tail -> age){
+        pushTail(name, age);
+    }else{
+        Node* curr = head;
+        while(curr -> next -> age < age){
+            curr = curr -> next;
+        }
+
+        temp -> next = curr -> next;
+        curr -> next = temp;
+    }
+}
+
+void popHead(char name[], int age){
+    if(head == NULL){
+        printf("There's no node in this list!\n");
+    }else if(head == tail){
+        free(head);
+    }
 }
 
 void printAll(){
@@ -48,17 +72,19 @@ void printAll(){
     }else{
         Node* temp = head;
         while(temp != NULL){
-            printf("Name : %s\nAge : %d\n\n", temp ->name, temp -> age);
+            printf("%s %d -> ", temp -> name, temp -> age);
             temp = temp -> next;
         }
+
+        printf("NULL\n");
     }
 }
 
 int main(){
 
-    pushHead("Benny", 19);
-    pushTail("Adidas", 20);
-    pushHead("ynneB", 90);
+    pushMid("Benny", 19);
+    pushMid("Adidas", 90);
+    pushMid("ynneB", 20);
     printAll();
 
     
