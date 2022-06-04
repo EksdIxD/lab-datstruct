@@ -29,6 +29,39 @@ void insert(int number){
     size++;
 }
 
+int getLeftChild(int pos){
+    return pos * 2 + 1;
+}
+
+int getRightChild(int pos){
+    return pos * 2 + 2;
+}
+
+void minHeap(int pos){
+    int lowest = pos;
+    int left = getLeftChild(pos);
+    int right = getRightChild(pos);
+
+    if(left < size && heap[left] < heap[lowest]){
+        lowest = left;
+    }
+
+    if(right < size && heap[right] < heap[lowest]){
+        lowest = right;
+    }
+
+    if(lowest != pos){
+        swap(&heap[lowest], &heap[pos]);
+        minHeap(lowest);
+    }
+}
+
+void deleteHeap(){
+    heap[0] = heap[size - 1];
+    size--;
+    minHeap(0);
+}
+
 void printAll(){
     for(int i = 0; i < size; i++){
         printf("%d. %d\n", i + 1, heap[i]);
