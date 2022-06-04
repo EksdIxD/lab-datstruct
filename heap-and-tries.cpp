@@ -15,13 +15,27 @@ int getParent(int pos){
    return (pos - 1) / 2;
 }
 
-void insert(int number){
+void insertMinHeap(int number){
     //Masukin value ke dalam array
     heap[size] = number;
     
     //Check terhadap parent
     int index = size;
     while(index != 0 && heap[getParent(index)] > heap[index]){
+        swap(&heap[getParent(index)], &heap[index]);
+        index = getParent(index);
+    }
+
+    size++;
+}
+
+void insertMaxHeap(int number){
+    //Masukin value ke dalam array
+    heap[size] = number;
+    
+    //Check terhadap parent
+    int index = size;
+    while(index != 0 && heap[getParent(index)] < heap[index]){
         swap(&heap[getParent(index)], &heap[index]);
         index = getParent(index);
     }
@@ -56,10 +70,35 @@ void minHeap(int pos){
     }
 }
 
-void deleteHeap(){
+void maxHeap(int pos){
+    int highest = pos;
+    int left = getLeftChild(pos);
+    int right = getRightChild(pos);
+
+    if(left < size && heap[left] > heap[highest]){
+        highest = left;
+    }
+
+    if(right < size && heap[right] > heap[highest]){
+        highest = right;
+    }
+
+    if(highest != pos){
+        swap(&heap[highest], &heap[pos]);
+        minHeap(highest);
+    }
+}
+
+void deleteMinHeap(){
     heap[0] = heap[size - 1];
     size--;
     minHeap(0);
+}
+
+void deleteMaxHeap(){
+    heap[0] = heap[size - 1];
+    size--;
+    maxHeap(0);
 }
 
 void printAll(){
@@ -70,13 +109,28 @@ void printAll(){
 
 int main(){
 
-    insert(10);
-    insert(5);
-    insert(3);
-    insert(11);
-    insert(2);
+    // printf("Insert Min heap :\n");
+    // insertMinHeap(10);
+    // insertMinHeap(5);
+    // insertMinHeap(3);
+    // insertMinHeap(11);
+    // insertMinHeap(2);
+    // printAll();
+    // puts("");
 
+
+
+    printf("Insert Max heap :\n");
+    insertMaxHeap(10);
+    insertMaxHeap(5);
+    insertMaxHeap(3);
+    insertMaxHeap(11);
+    insertMaxHeap(2);
     printAll();
+    puts("");
+
+    // deleteMinHeap();
+    // printAll();
 
     return 0;
 }
