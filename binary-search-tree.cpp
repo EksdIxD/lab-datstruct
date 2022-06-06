@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+int counter = 0;
 struct Node{
     int number;
     Node *left, *right;
@@ -20,6 +21,7 @@ Node* createNewNode(int number){
 Node* insertNewNode(Node* curr, int number){
     if(curr == NULL){
         return createNewNode(number);
+        counter += 1;
     }
 
     if(number < curr -> number){
@@ -30,6 +32,22 @@ Node* insertNewNode(Node* curr, int number){
 
     return curr;
 }   
+
+Node* searchNode(Node* curr, int number){
+    counter -= 1;
+    if(number == curr -> number && counter >= 1){
+        printf("Number %d found!\n", curr -> number);
+    }else if(counter <= 0){
+        printf("Number not found!\n");
+    }
+
+    if(number < curr -> number){
+        curr -> left = searchNode(curr -> left, number);
+    }else if(number > curr -> number){
+        curr -> right = searchNode(curr -> right, number);
+    }
+    return curr;
+}
 
 void inOrder(Node* curr){
     if(curr != NULL){
@@ -57,7 +75,7 @@ void postOrder(Node* curr){
 
 
 
-int main() {
+int main(){
     Node* root = NULL;
     root = insertNewNode(root, 100);
     insertNewNode(root, 50);
@@ -65,12 +83,14 @@ int main() {
     insertNewNode(root, 75);
     insertNewNode(root, 150);
 
-    inOrder(root);
-    puts("NULL");
-    preOrder(root);
-    puts("NULL");
-    postOrder(root);
-    puts("NULL");
+    searchNode(root, 87);
+
+    // inOrder(root);
+    // puts("NULL");
+    // preOrder(root);
+    // puts("NULL");
+    // postOrder(root);
+    // puts("NULL");
 
     return 0;
 }
