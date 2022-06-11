@@ -33,12 +33,26 @@ Node* insertNewNode(Node* curr, int number){
     return curr;
 }   
 
+// Node* searchNode(Node* curr, int number){
+//     counter -= 1;
+//     if(number == curr -> number && counter >= 1){
+//         printf("Number %d found!\n", curr -> number);
+//     }else if(counter <= 0){
+//         printf("Number not found!\n");
+//         return curr;
+//     }
+
+//     if(number < curr -> number){
+//         curr -> left = searchNode(curr -> left, number);
+//     }else if(number > curr -> number){
+//         curr -> right = searchNode(curr -> right, number);
+//     }
+//     return curr;
+// }
+
 Node* searchNode(Node* curr, int number){
-    counter -= 1;
-    if(number == curr -> number && counter >= 1){
-        printf("Number %d found!\n", curr -> number);
-    }else if(counter <= 0){
-        printf("Number not found!\n");
+    if(curr == NULL){
+        return curr;
     }
 
     if(number < curr -> number){
@@ -47,6 +61,28 @@ Node* searchNode(Node* curr, int number){
         curr -> right = searchNode(curr -> right, number);
     }
     return curr;
+}
+
+Node* deleteNode(Node* curr, int number){
+    if(curr == NULL){
+        return curr;
+    }
+
+    if(number < curr -> number){
+        curr -> left = deleteNode(curr -> left, number);
+    }else if(number > curr -> number){
+        curr -> right = deleteNode(curr -> right, number);
+    }else if(number == curr -> number){
+        if(curr -> left == NULL && curr -> right == NULL){
+            free(curr);
+            return NULL;
+        }else if(curr -> left != NULL || curr -> right != NULL){
+            
+        }
+            
+    }
+
+
 }
 
 void inOrder(Node* curr){
@@ -83,14 +119,18 @@ int main(){
     insertNewNode(root, 75);
     insertNewNode(root, 150);
 
-    searchNode(root, 87);
+    // if(searchNode(root,87) != NULL){
+    //     printf("Found!\n");
+    // }else{
+    //     printf("Not found!\n");
+    // }
 
-    // inOrder(root);
-    // puts("NULL");
-    // preOrder(root);
-    // puts("NULL");
-    // postOrder(root);
-    // puts("NULL");
+    inOrder(root);
+    puts("NULL");
+    preOrder(root);
+    puts("NULL");
+    postOrder(root);
+    puts("NULL");
 
     return 0;
 }
